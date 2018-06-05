@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, url_for
 from forms import ItemForm
 from models import Items
 from database import db_session
+from tabulate import tabulate
 
 app = Flask(__name__)
 app.secret_key = os.environ['APP_SECRET_KEY']
@@ -21,13 +22,11 @@ def add_item():
 
 @app.route("/success")
 def success():
-    results = []
- 
     qry = db_session.query(Items)
     results = qry.all()
-
+    results_list = [[item.id, item.name, item.quantity, item.description] for item in results]
+    print(tabulate(results_list, headers=['Id', 'Name', 'Qty', 'Descr'], tablefmt='orgtbl'))
     return str(results)
-  
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')

@@ -12,3 +12,8 @@ class Items(Base):
     quantity = Column(Integer)
     description = Column(String(256))
     date_added = Column(DateTime())
+
+    """ String representation of an item
+    """
+    def __repr__(self):
+        return '    '.join(['ID: ', str(self.id), 'Name: ', str(self.name), 'Qty: ', str(self.quantity), 'Descr: ', str(self.description)])
