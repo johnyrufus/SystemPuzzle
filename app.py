@@ -6,6 +6,7 @@ from forms import ItemForm
 from models import Items
 from database import db_session
 from tabulate import tabulate
+from tables import Results
 
 app = Flask(__name__)
 app.secret_key = os.environ['APP_SECRET_KEY']
@@ -26,7 +27,10 @@ def success():
     results = qry.all()
     results_list = [[item.id, item.name, item.quantity, item.description] for item in results]
     print(tabulate(results_list, headers=['Id', 'Name', 'Qty', 'Descr'], tablefmt='orgtbl'))
-    return str(results)
+    #return str(results)
+    table = Results(results)
+    table.border = True
+    return render_template('results.html', table=table)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -3,4 +3,5 @@ Flask
 psycopg2-binary
 SQLAlchemy
 Flask-WTF
+flask_table
 
